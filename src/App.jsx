@@ -1,55 +1,19 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './login';
+import { Home } from './home';
+import {Cadastro} from './sigin';
 
-const logar = async (username, password) => {
-  try {
-    const response = await axios.post('http://localhost:8090/api/login', {
-      username: username,
-      password: password,
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
+
 function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const handleLogin = async () => {
-    try {
-      const response = await logar(username, password);
-      alert(response + " " + password);
-    } catch (error) {
-      console.error('Erro ao se logar:', error);
-    }
-  };
   return (
-    <div>
-      <h1>Login SyStem</h1>
-      <form>
-        <label>
-          Usuário:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Senha:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
-      </form>
-    </div>
+    <Router>
+      <Routes>
+      <Route path="/" element={<Login />} /> 
+        <Route path="/home" element={<Home />} />        
+        <Route path="/cadastro" element={<Cadastro />} />
+      </Routes>
+    </Router>
   );
 }
 export default App;
